@@ -88,26 +88,34 @@ class knn():
             return th_knns
 
 
-class knn_faiss_gpu(knn):
+class knn_faiss(knn):
+    """
+    内积暴力循环
+    归一化特征的内积等价于余弦相似度
+    """
     def __init__(self,
                  feats,
                  k,
                  index_path='',
+                 knn_method='faiss-cpu',
                  verbose=True):
         import faiss
-        with Timer('[faiss_gpu] build index {}'.format(k), verbose):
+        with Timer('[{}] build index {}'.format(knn_method, k), verbose):
             knn_ofn = index_path + '.npz'
             if os.path.exists(knn_ofn):
-                print('[faiss_gpu] read knns from {}'.format(knn_ofn))
+                print('[{}] read knns from {}'.format(knn_method, knn_ofn))
                 self.knns = np.load(knn_ofn)['data']
             else:
                 feats = feats.astype('float32')
                 size, dim = feats.shape
-                res = faiss.StandardGpuResources()
-                res.setTempMemory(1 * 1024 * 1024 * 1024)
-                index = faiss.GpuIndexFlatIP(res, dim)
+                if knn_method == 'faiss-gpu':
+                    res = faiss.StandardGpuResources()
+                    res.setTempMemory(1 * 1024 * 1024 * 1024)
+                    index = faiss.GpuIndexFlatIP(res, dim)
+                else:
+                    index = faiss.IndexFlatIP(dim)
                 index.add(feats)
-        with Timer('[faiss_gpu] query topk {}'.format(k), verbose):
+        with Timer('[{}] query topk {}'.format(knn_method, k), verbose):
             knn_ofn = index_path + '.npz'
             if os.path.exists(knn_ofn):
                 pass
@@ -223,16 +231,17 @@ def cluster_by_infomap(nbrs, dists, pred_lable_path):
         evaluate(gt_labels, pred_labels, metric)
 
 
-def get_dist_nbr(feature_path, k=80):
+def get_dist_nbr(feature_path, k=80, knn_method='faiss-cpu'):
     features = np.fromfile(feature_path, dtype=np.float32)
     features = features.reshape(-1, 256)
     features = l2norm(features)
 
-    index = knn_faiss_gpu(feats=features, k=k)
+    index = knn_faiss(feats=features, k=k, knn_method=knn_method)
     knns = index.get_knns()
     dists, nbrs = knns2ordered_nbrs(knns)
     return dists, nbrs
 
+knn_method = 'faiss-gpu'
 metrics = ['pairwise', 'bcubed', 'nmi']
 min_sim = 0.58
 k = 50
@@ -240,7 +249,7 @@ k = 50
 label_path = '/home/deeplearn/project/learn-to-cluster/data/labels/part1_test.meta'
 feature_path = '/home/deeplearn/project/learn-to-cluster/data/features/part1_test.bin'
 pred_lable_path = '/home/deeplearn/project/learn-to-cluster/evaluate_part/result/part1_test_predict.txt'
-dists, nbrs = get_dist_nbr(feature_path=feature_path, k=k)
+dists, nbrs = get_dist_nbr(feature_path=feature_path, k=k, knn_method=knn_method)
 print(dists.shape, nbrs.shape)
 
 cluster_by_infomap(nbrs, dists, pred_lable_path)

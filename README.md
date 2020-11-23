@@ -44,5 +44,5 @@ python face-cluster-by-infomap
 ![avatar](./image/evaluate.png)
 
 ## References
-[最小熵原理（五）：“层层递进”之社区发现与聚类](https://spaces.ac.cn/archives/7006)
-[人脸聚档主流方案](https://github.com/yl-1993/learn-to-cluster)
+* [最小熵原理（五）：“层层递进”之社区发现与聚类](https://spaces.ac.cn/archives/7006)
+* [人脸聚档主流方案](https://github.com/yl-1993/learn-to-cluster)
