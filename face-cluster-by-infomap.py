@@ -160,12 +160,12 @@ def get_links(single, links, nbrs, dists):
     return single, links
 
 
-def cluster_by_infomap(nbrs, dists, pred_lable_path):
+def cluster_by_infomap(nbrs, dists, pred_label_path):
     """
     基于infomap的聚类
     :param nbrs: 
     :param dists: 
-    :param pred_lable_path: 
+    :param pred_label_path: 
     :return: 
     """
     single = []
@@ -220,7 +220,7 @@ def cluster_by_infomap(nbrs, dists, pred_lable_path):
     print(idx_len)
 
     # 保存结果
-    # with open(pred_lable_path, 'w') as of:
+    # with open(pred_label_path, 'w') as of:
     #     for idx in range(idx_len):
     #         of.write(str(idx2label[idx]) + '\n')
 
@@ -248,10 +248,10 @@ k = 50
 # true_label
 label_path = '/home/deeplearn/project/learn-to-cluster/data/labels/part1_test.meta'
 feature_path = '/home/deeplearn/project/learn-to-cluster/data/features/part1_test.bin'
-pred_lable_path = '/home/deeplearn/project/learn-to-cluster/evaluate_part/result/part1_test_predict.txt'
+pred_label_path = '/home/deeplearn/project/learn-to-cluster/evaluate_part/result/part1_test_predict.txt'
 dists, nbrs = get_dist_nbr(feature_path=feature_path, k=k, knn_method=knn_method)
 print(dists.shape, nbrs.shape)
 
-cluster_by_infomap(nbrs, dists, pred_lable_path)
+cluster_by_infomap(nbrs, dists, pred_label_path)
 
 
