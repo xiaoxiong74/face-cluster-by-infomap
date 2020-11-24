@@ -160,7 +160,7 @@ def get_links(single, links, nbrs, dists):
     return single, links
 
 
-def cluster_by_infomap(nbrs, dists, pred_label_path):
+def cluster_by_infomap(nbrs, dists, pred_label_path, save_result=False):
     """
     基于infomap的聚类
     :param nbrs: 
@@ -201,12 +201,12 @@ def cluster_by_infomap(nbrs, dists, pred_label_path):
             node_count += len(v[1:])
             # print(k, v[1:])
 
-    print(node_count)
+    # print(node_count)
     # 孤立点个数
-    print(len(single))
+    print("孤立点数：{}".format(len(single)))
 
     keys_len = len(list(label2idx.keys()))
-    print(keys_len)
+    # print(keys_len)
 
     # 孤立点放入到结果中
     for single_node in single:
@@ -214,15 +214,16 @@ def cluster_by_infomap(nbrs, dists, pred_label_path):
         label2idx[keys_len] = [single_node]
         keys_len += 1
 
-    print(keys_len)
+    print("总类别数：{}".format(keys_len))
 
     idx_len = len(list(idx2label.keys()))
-    print(idx_len)
+    print("总节点数：{}".format(idx_len))
 
     # 保存结果
-    # with open(pred_label_path, 'w') as of:
-    #     for idx in range(idx_len):
-    #         of.write(str(idx2label[idx]) + '\n')
+    if save_result:
+        with open(pred_label_path, 'w') as of:
+            for idx in range(idx_len):
+                of.write(str(idx2label[idx]) + '\n')
 
     pred_labels = intdict2ndarray(idx2label)
     true_lb2idxs, true_idx2lb = read_meta(label_path)
@@ -243,16 +244,16 @@ def get_dist_nbr(feature_path, k=80, knn_method='faiss-cpu'):
 
 knn_method = 'faiss-gpu'
 metrics = ['pairwise', 'bcubed', 'nmi']
-min_sim = 0.88
-k = 400
+min_sim = 0.58
+k = 50
 # true_label
-label_path = '/home/deeplearn/project/learn-to-cluster/data/labels/deepfashion_test.meta'
-feature_path = '/home/deeplearn/project/learn-to-cluster/data/features/deepfashion_test.bin'
-pred_label_path = '/home/deeplearn/project/learn-to-cluster/evaluate_part/result/part1_test_predict.txt'
+label_path = '/home/deeplearn/project/learn-to-cluster/data/labels/part1_test.meta'
+feature_path = '/home/deeplearn/project/learn-to-cluster/data/features/part1_test.bin'
+pred_label_path = './part1_test_predict.txt'
 
 with Timer('All face cluster step'):
     dists, nbrs = get_dist_nbr(feature_path=feature_path, k=k, knn_method=knn_method)
     print(dists.shape, nbrs.shape)
-    cluster_by_infomap(nbrs, dists, pred_label_path)
+    cluster_by_infomap(nbrs, dists, pred_label_path, save_result=False)
 
 
