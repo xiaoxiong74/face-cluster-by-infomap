@@ -1,5 +1,8 @@
 # Learning to Cluster Faces by Infomap
 
+## Intorduction
+采用了无监督方法infomap进行人脸聚类，在公开数据集上MS-Celeb-1M、YouTube-Faces、DeepFashion获得较当前主流方法同等或更优的效果，测试结果对比详见下表.
+
 ## Infomap Intorduction
 [Infomap Website](https://www.mapequation.org/publications.html#Rosvall-Axelsson-Bergstrom-2009-Map-equation)
 
@@ -8,9 +11,10 @@
 * sklearn
 * infomap
 * numpy
+* faiss-gpu(or faiss-cpu)
 
 ## Datasets
-MS-Celeb-1M : part1_test (584K)
+MS-Celeb-1M : part1_test (584K)、YouTube-Faces、DeepFashion
 [download](https://github.com/yl-1993/learn-to-cluster/blob/master/DATASET.md)
 
 ## Run
@@ -39,9 +43,44 @@ python face-cluster-by-infomap
 | GCN-D + GCN-S (20 prpsls) | 97.91 | 80.86 | 88.57 |
 | GCN-V | 92.45 | 82.42 | 87.14 |
 | GCN-V + GCN-E | 92.56 | 83.74 | 87.93 |
-| Infomap(ours) | 95.50 | 92.51 | 93.98 |
+| Infomap(ours)(k=50,min_sim=0.58) | 95.50 | 92.51 | 93.98 |
 
 ![avatar](./image/evaluate.png)
+
+## Results on YouTube-Faces
+
+| Method | Pairwise F-score | BCubed F-score | NMI |
+| ------ |:---------:|:------:|:-------:|
+| Chinese Whispers (k=160, th=0.75, iters=20) | 72.9 | 70.55 | 93.25 |
+| Approx Rank Order (k=200, th=0) | 76.45 | 75.45 | 94.34 |
+| Kmeans (ncluster=1436) | 67.86 | 75.77 | 93.99 |
+| KNN DBSCAN (k=160, th=0., eps=0.3, min=1) | 91.35 | 89.34 | 97.52 |
+| FastHAC (dist=0.72, single) | 93.07 | 87.98 | 97.19 |
+| GCN-D (4 prpsls) | 94.44 | 91.33 | 97.97 |
+| Infomap(ours)(k=400,min_sim=0.56) | 92.82 | 91.78 | 98.04 |
+
+
+
+## Results on DeepFashion
+
+| Method | Pairwise F-score | BCubed F-score | NMI |
+| ------ |:---------:|:------:|:-------:|
+| Chinese Whispers (k=5, th=0.7, iters=20) | 31.22 | 53.25 | 89.8 |
+| Approx Rank Order (k=10, th=0) | 25.04 | 52.77 | 88.71 |
+| Kmeans (ncluster=3991) | 32.02 | 53.3 | 88.91 |
+| KNN DBSCAN (k=4, th=0., eps=0.1, min=2) | 25.07 | 53.23 | 90.75 |
+| FastHAC (dist=0.4, single) | 22.54 | 48.77 | 90.44 |
+| Meanshift (bandwidth=0.5) | 31.61 | 56.73 | 89.29 |
+| Spectral (ncluster=3991, affinity='rbf') | 29.6 | 47.12 | 86.95 |
+| DaskSpectral (ncluster=3991, affinity='rbf') | 24.25 | 44.11 | 86.21 |
+| CDP (single model, k=2, th=0.5, maxsz=200) | 28.28 | 57.83 | 90.93 |
+| L-GCN (k_at_hop=[5, 5], active_conn=5, step=0.5, maxsz=50)  | 30.7 | 60.13 | 90.67 |
+| GCN-D (2 prpsls) | 29.14 | 59.09 | 89.48 |
+| GCN-D (8 prpsls) | 32.52 | 57.52 | 89.54 |
+| GCN-D (20 prpsls) | 33.25 | 56.83 | 89.36 |
+| GCN-V | 33.59 | 59.41 | 90.88 |
+| GCN-V + GCN-E | 38.47 | 60.06 | 90.5 |
+| Infomap(ours)(k=400,min_sim=0.88) | 38.67 | 60.48 | 90.97 |
 
 ## References
 * [最小熵原理（五）：“层层递进”之社区发现与聚类](https://spaces.ac.cn/archives/7006)

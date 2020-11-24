@@ -243,15 +243,16 @@ def get_dist_nbr(feature_path, k=80, knn_method='faiss-cpu'):
 
 knn_method = 'faiss-gpu'
 metrics = ['pairwise', 'bcubed', 'nmi']
-min_sim = 0.58
-k = 50
+min_sim = 0.88
+k = 400
 # true_label
-label_path = '/home/deeplearn/project/learn-to-cluster/data/labels/part1_test.meta'
-feature_path = '/home/deeplearn/project/learn-to-cluster/data/features/part1_test.bin'
+label_path = '/home/deeplearn/project/learn-to-cluster/data/labels/deepfashion_test.meta'
+feature_path = '/home/deeplearn/project/learn-to-cluster/data/features/deepfashion_test.bin'
 pred_label_path = '/home/deeplearn/project/learn-to-cluster/evaluate_part/result/part1_test_predict.txt'
-dists, nbrs = get_dist_nbr(feature_path=feature_path, k=k, knn_method=knn_method)
-print(dists.shape, nbrs.shape)
 
-cluster_by_infomap(nbrs, dists, pred_label_path)
+with Timer('All face cluster step'):
+    dists, nbrs = get_dist_nbr(feature_path=feature_path, k=k, knn_method=knn_method)
+    print(dists.shape, nbrs.shape)
+    cluster_by_infomap(nbrs, dists, pred_label_path)
 
 
