@@ -1,11 +1,16 @@
 # Learning to Cluster Faces by Infomap
 
 ## Intorduction
-采用了无监督方法infomap进行人脸聚类，在公开数据集上MS-Celeb-1M、YouTube-Faces、DeepFashion获得较当前主流方法(如GCN等监督方法)同等或更优的效果.
+采用了无监督方法infomap进行人脸聚类，在公开数据集上MS-Celeb-1M、YouTube-Faces、DeepFashion获得较当前主流方法(如GCN人脸聚类等监督方法)同等或更优的效果.
 通过faiss加速邻接边的构建，提高聚类速度，单批百万数据聚类仅需几分钟. 效果及性能测试详见下表.
 
 ## Infomap Intorduction
 [About Infomap](https://www.mapequation.org/publications.html#Rosvall-Axelsson-Bergstrom-2009-Map-equation)
+
+## About GCN Method
+1. L-GCN: [Linkage-based Face Clustering via Graph Convolution Network](https://arxiv.org/abs/1903.11306), CVPR 2019
+2. GCN-D: [Learning to Cluster Faces on an Affinity Graph](https://arxiv.org/abs/1904.02749), CVPR 2019 (**Oral**)
+3. GCN-V+GCN-E: [Learning to Cluster Faces via Confidence and Connectivity Estimation](https://arxiv.org/abs/2004.00445), CVPR 2020
 
 ## Requirements
 * Python >= 3.6
@@ -97,4 +102,4 @@ python face-cluster-by-infomap
 
 ## References
 * [最小熵原理（五）：“层层递进”之社区发现与聚类](https://spaces.ac.cn/archives/7006)
-* [人脸聚档主流方案](https://github.com/yl-1993/learn-to-cluster)
+* [人脸聚类主流方案](https://github.com/yl-1993/learn-to-cluster)
