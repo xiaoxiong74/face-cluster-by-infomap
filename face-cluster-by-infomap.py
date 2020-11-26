@@ -109,8 +109,12 @@ class knn_faiss(knn):
                 feats = feats.astype('float32')
                 size, dim = feats.shape
                 if knn_method == 'faiss-gpu':
+                    import math
+                    i = math.ceil(size/1000000)
+                    if i > 1:
+                        i = (i-1)*4
                     res = faiss.StandardGpuResources()
-                    res.setTempMemory(1 * 1024 * 1024 * 1024)
+                    res.setTempMemory(i * 1024 * 1024 * 1024)
                     index = faiss.GpuIndexFlatIP(res, dim)
                 else:
                     index = faiss.IndexFlatIP(dim)

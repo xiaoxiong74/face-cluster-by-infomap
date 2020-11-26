@@ -1,10 +1,11 @@
 # Learning to Cluster Faces by Infomap
 
 ## Intorduction
-采用了无监督方法infomap进行人脸聚类，在公开数据集上MS-Celeb-1M、YouTube-Faces、DeepFashion获得较当前主流方法同等或更优的效果，测试结果对比详见下表.
+采用了无监督方法infomap进行人脸聚类，在公开数据集上MS-Celeb-1M、YouTube-Faces、DeepFashion获得较当前主流方法(如GCN等监督方法)同等或更优的效果.
+通过faiss加速邻接边的构建，提高聚类速度，单批百万数据聚类仅需几分钟. 效果及性能测试详见下表.
 
 ## Infomap Intorduction
-[Infomap Website](https://www.mapequation.org/publications.html#Rosvall-Axelsson-Bergstrom-2009-Map-equation)
+[About Infomap](https://www.mapequation.org/publications.html#Rosvall-Axelsson-Bergstrom-2009-Map-equation)
 
 ## Requirements
 * Python >= 3.6
@@ -81,6 +82,18 @@ python face-cluster-by-infomap
 | GCN-V | 33.59 | 59.41 | 90.88 |
 | GCN-V + GCN-E | 38.47 | 60.06 | 90.5 |
 | Infomap(ours)(k=400,min_sim=0.88) | 38.67 | 60.48 | 90.97 |
+
+
+## Time Consumes and Gpu Memory (k=50,min_sim=0.58)
+| Nodes | Edges | TimeCount | Gpu Memory |
+| ------ |:---------:|:---------:|:---------:|
+| 500000 | 16535263 | 160(s) | 2745(MiB) |
+| 1000000 | 30206572 | 400(s) | 3235(MiB) |
+
+## Comments
+* k值越大，TimeCount会变长，Gpu Memory会增加
+* k值并非infomap的参数，仅为faiss构建knn构建时使用
+* 数据量增加一倍，KNN构建时间为原来的4倍(实质为n*n的向量搜索)
 
 ## References
 * [最小熵原理（五）：“层层递进”之社区发现与聚类](https://spaces.ac.cn/archives/7006)
