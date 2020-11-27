@@ -21,7 +21,8 @@
 
 ## Datasets
 MS-Celeb-1M : part1_test (584K)、YouTube-Faces、DeepFashion
-[download](https://github.com/yl-1993/learn-to-cluster/blob/master/DATASET.md)
+
+[data preparation](https://github.com/xiaoxiong74/face-cluster-by-infomap/tree/master/data/README.md)
 
 ## Run
 ```bash
@@ -99,6 +100,16 @@ python face-cluster-by-infomap
 * k值越大，TimeCount会变长，Gpu Memory会增加
 * k值并非infomap的参数，仅为faiss构建knn构建时使用
 * 数据量增加一倍，KNN构建时间为原来的4倍(实质为n*n的向量搜索)
+
+## Feature Extraction
+To experiment with your own face pictures, it is required to extracted face features from the pictures.
+
+For training face recognition and feature extraction, you may use any frameworks below, including but not limited to:
+
+[https://github.com/yl-1993/hfsoftmax](https://github.com/yl-1993/hfsoftmax)
+
+[https://github.com/XiaohangZhan/face_recognition_framework](https://github.com/XiaohangZhan/face_recognition_framework)
+
 
 ## References
 * [最小熵原理（五）：“层层递进”之社区发现与聚类](https://spaces.ac.cn/archives/7006)
