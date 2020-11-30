@@ -200,9 +200,11 @@ def cluster_by_infomap(nbrs, dists, pred_label_path, save_result=False):
     for k, v in label2idx.items():
         if k == 0:
             node_count += len(v[2:])
+            label2idx[k] = v[2:]
             # print(k, v[2:])
         else:
             node_count += len(v[1:])
+            label2idx[k] = v[1:]
             # print(k, v[1:])
 
     # print(node_count)
