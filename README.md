@@ -53,7 +53,7 @@ python face-cluster-by-infomap
 | GCN-V + GCN-E | 92.56 | 83.74 | 87.93 |
 | Infomap(ours)(k=50,min_sim=0.58) | 95.50 | 92.51 | 93.98 |
 
-![avatar](./image/evaluate.png)
+![](image/evaluate.png)
 
 ## Results on YouTube-Faces
 

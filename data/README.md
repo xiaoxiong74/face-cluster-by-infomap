@@ -16,6 +16,8 @@ The data directory is constucted as follows:
 - `features` currently supports binary file.
 - `labels` supports plain text where each line indicates a label corresponding to the feature file.
 
+```
+
 ### Feature Extraction
 To experiment with your own face pictures, it is required to extracted face features from the pictures.
 

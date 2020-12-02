@@ -231,11 +231,12 @@ def cluster_by_infomap(nbrs, dists, pred_label_path, save_result=False):
             for idx in range(idx_len):
                 of.write(str(idx2label[idx]) + '\n')
 
-    pred_labels = intdict2ndarray(idx2label)
-    true_lb2idxs, true_idx2lb = read_meta(label_path)
-    gt_labels = intdict2ndarray(true_idx2lb)
-    for metric in metrics:
-        evaluate(gt_labels, pred_labels, metric)
+    if label_path is not None:
+        pred_labels = intdict2ndarray(idx2label)
+        true_lb2idxs, true_idx2lb = read_meta(label_path)
+        gt_labels = intdict2ndarray(true_idx2lb)
+        for metric in metrics:
+            evaluate(gt_labels, pred_labels, metric)
 
 
 def get_dist_nbr(feature_path, k=80, knn_method='faiss-cpu'):
