@@ -115,3 +115,14 @@ For training face recognition and feature extraction, you may use any frameworks
 ## References
 * [最小熵原理（五）：“层层递进”之社区发现与聚类](https://spaces.ac.cn/archives/7006)
 * [人脸聚类主流方案](https://github.com/yl-1993/learn-to-cluster)
+
+## Citation
+
+```
+@misc{face-cluster-by-infomap,
+  title={face-cluster-by-infomap},
+  author={Yongfu Xiong},
+  year={2020},
+  howpublished={\url{https://github.com/xiaoxiong74/face-cluster-by-infomap}},
+}
+```
