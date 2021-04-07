@@ -12,6 +12,8 @@
 2. GCN-D: [Learning to Cluster Faces on an Affinity Graph](https://arxiv.org/abs/1904.02749), CVPR 2019 (**Oral**)
 3. GCN-V+GCN-E: [Learning to Cluster Faces via Confidence and Connectivity Estimation](https://arxiv.org/abs/2004.00445), CVPR 2020
 4. GCN+LSTM: [Density-Aware Feature Embedding for Face Clustering](https://openaccess.thecvf.com/content_CVPR_2020/papers/Guo_Density-Aware_Feature_Embedding_for_Face_Clustering_CVPR_2020_paper.pdf), CVPR 2020
+5. STAR-FC: [Structure-Aware Face Clustering on a Large-Scale Graph with 107 Nodes
+](https://arxiv.org/pdf/2103.13225.pdf)  [code](https://github.com/sstzal/STAR-FC)
 
 ## Requirements
 * Python >= 3.6
